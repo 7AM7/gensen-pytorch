@@ -1,0 +1,111 @@
+{
+  "training": {
+    "optimizer": "adam",
+    "clip_c": 1,
+    "lrate": 0.0001,
+    "batch_size": 16,
+    "n_gpus": 1
+  },
+
+  "management": {
+    "monitor_loss": 9600,
+    "checkpoint_freq": 512000,
+    "eval_freq": 512000,
+    "buffer_size": 128000
+  },
+
+  "tasks": [
+        {
+            "train_src": "/data/GenSen-Ar/corpora/nmt/ar-en/ar-en.ar-sample-clean.tok.train",
+            "train_trg": "/data/GenSen-Ar/corpora/nmt/ar-en/ar-en.en-translated-sample-clean.tok.train",
+            "val_src": "/data/GenSen-Ar/corpora/nmt/ar-en/ar-en.ar-clean.tok.test",
+            "val_trg": "/data/GenSen-Ar/corpora/nmt/ar-en/ar-en.en-clean.tok.test",
+            "taskname": "ar-en",
+            "tasktype": "seq2seq"
+        },
+        {
+            "train_src": "/data/GenSen-Ar/corpora/nmt/ar-en/ar-en.en-translated-sample-clean.tok.train",
+            "train_trg": "/data/GenSen-Ar/corpora/nmt/ar-en/ar-en.ar-sample-clean.tok.train",
+            "val_src": "/data/GenSen-Ar/corpora/nmt/ar-en/ar-en.en-clean.tok.test",
+            "val_trg": "/data/GenSen-Ar/corpora/nmt/ar-en/ar-en.ar-clean.tok.test",
+            "taskname": "en-ar",
+            "tasktype": "seq2seq"
+
+        },
+        {
+            "train_src": "/data/GenSen-Ar/corpora/skipthought/source.txt",
+            "train_trg": "/data/GenSen-Ar/corpora/skipthought/next.txt",
+            "taskname": "skipthought_ar",
+            "tasktype": "seq2seq"
+
+        },
+        {
+            "train_src": "/data/GenSen-En/corpora/skipthought/bookcorpus10m.txt",
+            "train_trg": "/data/GenSen-En/corpora/skipthought/next10m.txt",
+            "taskname": "skipthought_en",
+            "tasktype": "seq2seq"
+        },
+        {
+            "train_src": "/data/GenSen-Ar/corpora/nmt/dialect-msa/dialects_train.txt",
+            "train_trg": "/data/GenSen-Ar/corpora/nmt/dialect-msa/msa_train.txt",
+            "val_src": "/data/GenSen-Ar/corpora/nmt/dialect-msa/dialects_test.txt",
+            "val_trg": "/data/GenSen-Ar/corpora/nmt/dialect-msa/msa_test.txt",
+            "taskname": "dialect-ar",
+            "tasktype": "seq2seq"
+
+        },
+        {
+            "train_src": "/data/GenSen-Ar/corpora/nmt/dialect-en/dialects_train.txt",
+            "train_trg": "/data/GenSen-Ar/corpora/nmt/dialect-en/en_train.txt",
+            "val_src": "/data/GenSen-Ar/corpora/nmt/dialect-en/dialects_test.txt",
+            "val_trg": "/data/GenSen-Ar/corpora/nmt/dialect-en/en_test.txt",
+            "taskname": "dialect-en",
+            "tasktype": "seq2seq"
+
+        },
+        {
+          "train_src": "/data/GenSen-Ar/corpora/pair/binli/train.tok",
+          "val_src": "/data/GenSen-Ar/corpora/pair/binli/dev.tok",
+          "taskname": "bi-nli",
+          "tasktype": "pair-classification",
+          "labels_mapping": "/data/GenSen-Ar/corpora/pair/nli/mapping.txt",
+          "num_of_classes": 3
+        },
+        {
+          "train_src": "/data/GenSen-Ar/corpora/classification/dialect/train.tok",
+          "val_src": "/data/GenSen-Ar/corpora/classification/dialect/dev.tok",
+          "taskname": "dialects_detection",
+          "tasktype": "classification",
+          "labels_mapping": "/data/GenSen-Ar/corpora/classification/dialect/mapping.txt",
+          "num_of_classes": 7
+        }
+      ],
+
+  "vocab": {
+          "model_prefix": "tokenizer",
+          "vocab_size": 40000,
+          "model_type": "bpe",
+          "max_num_sentences": 30000000,
+          "special_tokens": [
+            "<s>",
+            "</s>",
+            "<pad>"
+          ],
+          "lowercase": false
+      },
+
+  "model": {
+    	"dim_src": 2048,
+    	"dim_trg": 2048,
+    	"dim_word_src": 512,
+    	"dim_word_trg": 512,
+    	"n_layers_src": 1,
+    	"bidirectional": true,
+        "dropout": 0.3,
+        "max_src_length": 64,
+        "max_trg_length": 64,
+        "pooling_strategy": "mean",
+        "model_dir": "/data/GenSen-Ar/models/mean-sort-sp-en-translated-skn-binli-dialect-dialect/checkpoints/",
+        "vocab_dir": "/data/GenSen-Ar/models/mean-sort-sp-en-translated-skn-binli-dialect-dialect/vocab/"
+    }
+}
